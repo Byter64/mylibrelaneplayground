@@ -29,7 +29,7 @@ module chip_core #(
         if (!rst_n) begin
             count <= '0;
         end else begin
-            if (&input_in) begin
+            if (&input_in & &bidir_in) begin
                 count <= count + 1;
             end
         end

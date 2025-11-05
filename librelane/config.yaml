@@ -44,55 +44,55 @@ PAD_SOUTH: [
     clk_pad,
     rst_n_pad,
 
-    "bidirs\\[0\\].pad",
-    "bidirs\\[1\\].pad",
-    "bidirs\\[2\\].pad",
-    "bidirs\\[3\\].pad",
-    "bidirs\\[4\\].pad",
-    "bidirs\\[5\\].pad",
-    "bidirs\\[6\\].pad",
-    "bidirs\\[7\\].pad"
+    "bidirs\\[0\\].bidir_pad",
+    "bidirs\\[1\\].bidir_pad",
+    "bidirs\\[2\\].bidir_pad",
+    "bidirs\\[3\\].bidir_pad",
+    "bidirs\\[4\\].bidir_pad",
+    "bidirs\\[5\\].bidir_pad",
+    "bidirs\\[6\\].bidir_pad",
+    "bidirs\\[7\\].bidir_pad"
 ]
 
 PAD_EAST: [
-    "analogs\\[0\\].pad",
-    "analogs\\[1\\].pad",
-    "analogs\\[2\\].pad",
-    "analogs\\[3\\].pad",
-    "analogs\\[4\\].pad",
-    "analogs\\[5\\].pad",
-    "analogs\\[6\\].pad",
-    "analogs\\[7\\].pad",
+    "analogs\\[0\\].analog_pad",
+    "analogs\\[1\\].analog_pad",
+    "analogs\\[2\\].analog_pad",
+    "analogs\\[3\\].analog_pad",
+    "analogs\\[4\\].analog_pad",
+    "analogs\\[5\\].analog_pad",
+    "analogs\\[6\\].analog_pad",
+    "analogs\\[7\\].analog_pad",
     
-    "vdd_pads\\[0\\].pad",
-    "vss_pads\\[0\\].pad"
+    "vdd_pads\\[0\\].vdd_pad",
+    "vss_pads\\[0\\].vss_pad"
 ]
 
 PAD_NORTH: [
-    "outputs\\[7\\].pad",
-    "outputs\\[6\\].pad",
-    "outputs\\[5\\].pad",
-    "outputs\\[4\\].pad",
-    "outputs\\[3\\].pad",
-    "outputs\\[2\\].pad",
-    "outputs\\[1\\].pad",
-    "outputs\\[0\\].pad",
+    "outputs\\[7\\].output_pad",
+    "outputs\\[6\\].output_pad",
+    "outputs\\[5\\].output_pad",
+    "outputs\\[4\\].output_pad",
+    "outputs\\[3\\].output_pad",
+    "outputs\\[2\\].output_pad",
+    "outputs\\[1\\].output_pad",
+    "outputs\\[0\\].output_pad",
     
-    "iovdd_pads\\[0\\].pad",
-    "iovss_pads\\[0\\].pad"
+    "iovdd_pads\\[0\\].iovdd_pad",
+    "iovss_pads\\[0\\].iovss_pad"
 ]
 
 PAD_WEST: [
-    "inputs\\[9\\].pad",
-    "inputs\\[8\\].pad",
-    "inputs\\[7\\].pad",
-    "inputs\\[6\\].pad",
-    "inputs\\[5\\].pad",
-    "inputs\\[4\\].pad",
-    "inputs\\[3\\].pad",
-    "inputs\\[2\\].pad",
-    "inputs\\[1\\].pad",
-    "inputs\\[0\\].pad"
+    "inputs\\[9\\].input_pad",
+    "inputs\\[8\\].input_pad",
+    "inputs\\[7\\].input_pad",
+    "inputs\\[6\\].input_pad",
+    "inputs\\[5\\].input_pad",
+    "inputs\\[4\\].input_pad",
+    "inputs\\[3\\].input_pad",
+    "inputs\\[2\\].input_pad",
+    "inputs\\[1\\].input_pad",
+    "inputs\\[0\\].input_pad"
 ]
 
 # SDC files
