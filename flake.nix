@@ -9,7 +9,7 @@
   };
 
   inputs = {
-    nix-eda.url = "github:fossi-foundation/nix-eda/5.9.0";
+    nix-eda.url = "github:fossi-foundation/nix-eda/5.13.0";
     librelane = {
       url = "github:librelane/librelane/leo/ihp-sg13g2";
       inputs.nix-eda.follows = "nix-eda";
