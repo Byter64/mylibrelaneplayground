@@ -39,35 +39,28 @@ if { [info exists ::env(MAX_CAPACITANCE_CONSTRAINT)] } {
     set_max_capacitance $::env(MAX_CAPACITANCE_CONSTRAINT) [current_design]
 }
 
-set clk_input [get_port $clock_port]
 set clocks [get_clocks $clock_port]
-
-# Clock pad
-set_driving_cell -lib_cell sg13g2_IOPadIn -pin pad $clk_input
 
 # Input-only pads
 set clk_core_input_ports [get_ports { 
   rst_n_PAD
-	input_PAD[.*]
+	input_PAD[*]
 }] 
-set_driving_cell -lib_cell sg13g2_IOPadIn -pin pad $clk_core_input_ports
 
 set_input_delay -min 0 -clock $clocks $clk_core_input_ports
 set_input_delay -max $input_delay_value -clock $clocks $clk_core_input_ports
 
 # Output-only pads
 set clk_core_output_ports [get_ports { 
-	output_PAD[.*]
+	output_PAD[*]
 }] 
-set_driving_cell -lib_cell sg13g2_IOPadOut30mA -pin pad $clk_core_output_ports
 
 set_output_delay $output_delay_value -clock $clocks $clk_core_output_ports
 
 # Bidirectional pads
 set clk_core_inout_ports [get_ports { 
-	bidir_PAD[.*]
+	bidir_PAD[*]
 }] 
-set_driving_cell -lib_cell sg13g2_IOPadInOut30mA -pin pad $clk_core_inout_ports
 
 set_input_delay -min 0 -clock $clocks $clk_core_inout_ports
 set_input_delay -max $input_delay_value -clock $clocks $clk_core_inout_ports
