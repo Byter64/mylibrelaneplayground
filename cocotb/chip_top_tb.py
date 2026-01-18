@@ -76,7 +76,7 @@ async def test_counter(dut):
     await ClockCycles(dut.clk_PAD, 100)
 
     # Check the end result of the counter
-    assert dut.bidir_PAD.value == 100 - 1
+    assert dut.output_PAD.value == 100 - 1
 
     logger.info("Done!")
 
@@ -105,9 +105,13 @@ def chip_top_runner():
         # IO pad models
         Path(pdk_root) / pdk / "libs.ref/sg13g2_io/verilog/sg13g2_io.v",
         
-        # Bondpad
+        # Bondpads
         proj_path / "../ip/bondpad_70x70/vh/bondpad_70x70.v",
         proj_path / "../ip/bondpad_70x70_novias/vh/bondpad_70x70_novias.v",
+        
+        # SRAM models
+        Path(pdk_root) / pdk / "libs.ref/sg13g2_sram/verilog/RM_IHPSG13_1P_1024x32_c2_bm_bist.v",
+        Path(pdk_root) / pdk / "libs.ref/sg13g2_sram/verilog/RM_IHPSG13_1P_core_behavioral_bm_bist.v",
     ]
 
     build_args = []
