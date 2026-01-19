@@ -183,6 +183,9 @@ MACROS:
       i_chip_core.sram_1:
         location: [860, 390]
         orientation: E
+      i_chip_core.sram_2:
+        location: [390, 790]
+        orientation: N
 
 # This is an alternative method compared to
 # specifying the power connections in the RTL
@@ -191,6 +194,8 @@ PDN_MACRO_CONNECTIONS:
 - "i_chip_core.sram_0 VDD VSS VDD! VSS!"
 - "i_chip_core.sram_1 VDD VSS VDDARRAY! VSS!"
 - "i_chip_core.sram_1 VDD VSS VDD! VSS!"
+- "i_chip_core.sram_2 VDD VSS VDDARRAY! VSS!"
+- "i_chip_core.sram_2 VDD VSS VDD! VSS!"
 
 # Custom PDN config to connect to SRAMs
 PDN_CFG: dir::pdn_cfg.tcl
