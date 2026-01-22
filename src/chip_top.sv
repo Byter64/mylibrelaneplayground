@@ -13,8 +13,8 @@ module chip_top #(
     parameter NUM_IOVSS_PADS = 1,
     
     // Signal pads
-    parameter NUM_INPUT_PADS  = 10,
-    parameter NUM_OUTPUT_PADS = 8
+    parameter NUM_INPUT_PADS  = 70,
+    parameter NUM_OUTPUT_PADS = 32
     )(
     `ifdef USE_POWER_PINS
     inout wire IOVDD,
