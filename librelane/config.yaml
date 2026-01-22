@@ -45,27 +45,10 @@ PRIMARY_GDSII_STREAMOUT_TOOL: klayout
 # Specify the pad instances for the padring
 PAD_SOUTH: [
     clk_pad,
-    rst_n_pad,
-
-    "bidirs\\[0\\].bidir_pad",
-    "bidirs\\[1\\].bidir_pad",
-    "bidirs\\[2\\].bidir_pad",
-    "bidirs\\[3\\].bidir_pad",
-    "bidirs\\[4\\].bidir_pad",
-    "bidirs\\[5\\].bidir_pad",
-    "bidirs\\[6\\].bidir_pad",
-    "bidirs\\[7\\].bidir_pad"
+    rst_n_pad
 ]
 
 PAD_EAST: [
-    "analogs\\[0\\].analog_pad",
-    "analogs\\[1\\].analog_pad",
-    "analogs\\[2\\].analog_pad",
-    "analogs\\[3\\].analog_pad",
-    "analogs\\[4\\].analog_pad",
-    "analogs\\[5\\].analog_pad",
-    "analogs\\[6\\].analog_pad",
-    "analogs\\[7\\].analog_pad",
     
     "vdd_pads\\[0\\].vdd_pad",
     "vss_pads\\[0\\].vss_pad"
@@ -119,8 +102,8 @@ CLOCK_PERIOD: 20
 FP_SIZING: absolute
 # 3880umx5070um including 26um
 # for the sealring on all sides
-DIE_AREA: [0, 0, 5500, 5500]
-CORE_AREA: [500, 500, 5000, 5000] #Original margin was 365 on all sides
+DIE_AREA: [0, 0, 3000, 3000]
+CORE_AREA: [365, 365, 2635, 2635] #Original margin was 365 on all sides
 
 # Increase for more logic
 # on your die
