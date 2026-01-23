@@ -197,13 +197,12 @@ add_pdn_connect \
 
 define_pdn_grid \
     -macro \
-    -instances "\
-    chip_core.fb.sram0" \
-    -name sram0 \
+    -default \
+    -name sram_grid \
     -starts_with POWER
 
 add_pdn_stripe \
-    -grid sram0 \
+    -grid sram_grid \
     -layer Metal5 \
     -width 2.81 \
     -pitch 11.24 \
@@ -213,57 +212,11 @@ add_pdn_stripe \
     -starts_with POWER
 
 add_pdn_connect \
-    -grid sram0 \
+    -grid sram_grid \
     -layers "Metal4 Metal5"
-add_pdn_connect \
-    -grid sram0 \
-    -layers "Metal5 TopMetal1"
-
-
-define_pdn_grid \
-    -macro \
-    -instances "\
-    chip_core.fb.sram1" \
-    -name sram1 \
-    -starts_with POWER
-add_pdn_stripe \
-    -grid sram1 \
-    -layer Metal5 \
-    -width 2.81 \
-    -pitch 11.24 \
-    -offset 2.81 \
-    -spacing 2.81 \
-    -nets "VSS VDD" \
-    -starts_with POWER
 
 add_pdn_connect \
-    -grid sram1 \
-    -layers "Metal4 Metal5"
-add_pdn_connect \
-    -grid sram1 \
-    -layers "Metal5 TopMetal1"
-
-
-define_pdn_grid \
-    -macro \
-    -instances "\
-    chip_core.fb.sram2" \
-    -name sram2 \
-    -starts_with POWER
-add_pdn_stripe \
-    -grid sram2 \
-    -layer Metal5 \
-    -width 2.81 \
-    -pitch 11.24 \
-    -offset 2.81 \
-    -spacing 2.81 \
-    -nets "VSS VDD" \
-    -starts_with POWER
-add_pdn_connect \
-    -grid sram2 \
-    -layers "Metal4 Metal5"
-add_pdn_connect \
-    -grid sram2 \
+    -grid sram_grid \
     -layers "Metal5 TopMetal1"
 
 
@@ -284,11 +237,11 @@ add_pdn_connect \
 #    -macro \
 #    -instances "\
 #    i_chip_core.sram_2" \
-#    -name sram02 \
+#    -name sram_grid2 \
 #    -starts_with POWER
 #
 #add_pdn_stripe \
-#    -grid sram02 \
+#    -grid sram_grid2 \
 #    -layer Metal5 \
 #    -width 2.81 \
 #    -pitch 11.24 \
@@ -298,8 +251,8 @@ add_pdn_connect \
 #    -starts_with POWER
 #
 #add_pdn_connect \
-#    -grid sram02 \
+#    -grid sram_grid2 \
 #    -layers "Metal4 Metal5"
 #add_pdn_connect \
-#    -grid sram02 \
+#    -grid sram_grid2 \
 #    -layers "Metal5 TopMetal1"
