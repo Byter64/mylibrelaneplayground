@@ -240,8 +240,13 @@ MACROS:
       "nom_slow_1p08V_125C":
         - pdk_dir::libs.ref/sg13g2_sram/lib/RM_IHPSG13_2P_1024x16_c2_bm_bist_slow_1p08V_125C.lib
     instances:
-      # Make sure to specify the SRAMs in pdn_cfg.tcl
       chip_core.fb.sram0:
+        location: [590, 590]
+        orientation: N
+      chip_core.fb.sram1:
+        location: [590, 590]
+        orientation: N
+      chip_core.fb.sram2:
         location: [590, 590]
         orientation: N
 
@@ -250,10 +255,10 @@ MACROS:
 PDN_MACRO_CONNECTIONS:
 - "chip_core.fb.sram0 VDD VSS VDDARRAY! VSS!"
 - "chip_core.fb.sram0 VDD VSS VDD! VSS!"
-#- "chip_core.sram_1 VDD VSS VDDARRAY! VSS!"
-#- "chip_core.sram_1 VDD VSS VDD! VSS!"
-#- "chip_core.sram_2 VDD VSS VDDARRAY! VSS!"
-#- "chip_core.sram_2 VDD VSS VDD! VSS!"
+- "chip_core.fb.sram1 VDD VSS VDDARRAY! VSS!"
+- "chip_core.fb.sram1 VDD VSS VDD! VSS!"
+- "chip_core.fb.sram2 VDD VSS VDDARRAY! VSS!"
+- "chip_core.fb.sram2 VDD VSS VDD! VSS!"
 
 # Custom PDN config to connect to SRAMs
 PDN_CFG: dir::pdn_cfg.tcl

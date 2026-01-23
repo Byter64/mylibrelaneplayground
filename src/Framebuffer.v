@@ -17,20 +17,17 @@ module Framebuffer (
 logic[15:0] dataOutA0; logic[15:0] dataOutB0;
 logic[15:0] dataOutA1; logic[15:0] dataOutB1;
 logic[15:0] dataOutA2; logic[15:0] dataOutB2;
-logic[15:0] dataOutA3; logic[15:0] dataOutB3;
 
 assign dataOutA = 
 				(addressA[16:10] == 0) ? dataOutA0 :
 				(addressA[16:10] == 1) ? dataOutA1 :
 				(addressA[16:10] == 2) ? dataOutA2 :
-				(addressA[16:10] == 3) ? dataOutA3 :
 				16'h0000;
 
 assign dataOutB = 
 				(addressA[16:10] == 0) ? dataOutB0 :
 				(addressA[16:10] == 1) ? dataOutB1 :
 				(addressA[16:10] == 2) ? dataOutB2 :
-				(addressA[16:10] == 3) ? dataOutB3 :
 				16'h0000;
 
 RM_IHPSG13_2P_1024x16_c2_bm_bist sram0 (
@@ -134,47 +131,6 @@ RM_IHPSG13_2P_1024x16_c2_bm_bist sram2 (
     .B_DIN  (dataInB),
     .B_DLY  (1'b1), // tie high!
     .B_DOUT (dataOutB2),
-    .B_BM   ({16{1'b1}}),
-
-    // Built-in self test port
-    .A_BIST_CLK   ('0),
-    .A_BIST_EN    ('0),
-    .A_BIST_MEN   ('0),
-    .A_BIST_WEN   ('0),
-    .A_BIST_REN   ('0),
-    .A_BIST_ADDR  ('0),
-    .A_BIST_DIN   ('0),
-    .A_BIST_BM    ('0),
-
-    .B_BIST_CLK   ('0),
-    .B_BIST_EN    ('0),
-    .B_BIST_MEN   ('0),
-    .B_BIST_WEN   ('0),
-    .B_BIST_REN   ('0),
-    .B_BIST_ADDR  ('0),
-    .B_BIST_DIN   ('0),
-    .B_BIST_BM    ('0)
-);
-
-RM_IHPSG13_2P_1024x16_c2_bm_bist sram3 (
-    .A_CLK  (clkA),
-    .A_MEN  (1'b1),
-    .A_WEN  (writeEnableA & (addressA[16:10] == 3)),
-    .A_REN  (!writeEnableA & (addressA[16:10] == 3)),
-    .A_ADDR (addressA[9:0]),
-    .A_DIN  (dataInA),
-    .A_DLY  (1'b1), // tie high!
-    .A_DOUT (dataOutA3),
-    .A_BM   ({16{1'b1}}),
-
-    .B_CLK  (clkB),
-    .B_MEN  (1'b1),
-    .B_WEN  (writeEnableB & (addressB[16:10] == 3)),
-    .B_REN  (!writeEnableB & (addressB[16:10] == 3)),
-    .B_ADDR (addressB[9:0]),
-    .B_DIN  (dataInB),
-    .B_DLY  (1'b1), // tie high!
-    .B_DOUT (dataOutB3),
     .B_BM   ({16{1'b1}}),
 
     // Built-in self test port

@@ -4,7 +4,7 @@ import shutil
 
 scriptPath = Path(__file__).resolve()
 
-codeTemplate = """RM_IHPSG13_2P_1024x16_c2_bm_bist sram0 (
+verilogCodeTemplate = """RM_IHPSG13_2P_1024x16_c2_bm_bist sram0 (
     .A_CLK  (clkA),
     .A_MEN  (1'b1),
     .A_WEN  (writeEnableA & (addressA[16:10] == 0)),
@@ -45,14 +45,9 @@ codeTemplate = """RM_IHPSG13_2P_1024x16_c2_bm_bist sram0 (
     .B_BIST_BM    ('0)
 );""".splitlines()
 
-
-def parseArgs():
-	parser = argparse.ArgumentParser(
-		description="Generate the framebuffer and place it in src directory."
-	)
-	parser.add_argument("-c", "--count", type=int, required=True, help="Number of SRAM blocks to generate in the framebuffer.")
-
-	return parser.parse_args()
+########################################################################
+###### Verilog Generation ##############################################
+########################################################################
 
 def generateOutMuxer(instanceNumber, lines):
 	insertIndex = -1
@@ -99,7 +94,7 @@ def generateSRAMInstance(instanceNumber, lines):
 			break
 
 	for i in range(instanceNumber):
-		instanceCode = codeTemplate.copy()
+		instanceCode = verilogCodeTemplate.copy()
 		instanceCode[0] = instanceCode[0].replace("sram0", f"sram{i}")
 		instanceCode[3] = instanceCode[3].replace("== 0", f"== {i}")
 		instanceCode[4] = instanceCode[4].replace("== 0", f"== {i}")
@@ -115,12 +110,9 @@ def generateSRAMInstance(instanceNumber, lines):
 		lines.insert(insertIndex, "\n")
 		insertIndex += 1
 
-def main():
+def generateFrambufferFile(count):
 	global scriptPath
-	global codeTemplate
-
-	args = parseArgs()
-	count = args.count
+	global verilogCodeTemplate
 
 	#Delete old file
 	generatedFramebufferPath = scriptPath.parent.parent / "src" / "Framebuffer.v"
@@ -138,6 +130,92 @@ def main():
 	file.seek(0)
 	file.writelines(lines)
 	file.close()
+
+########################################################################
+###### config.yaml Generation ##########################################
+########################################################################
+def sramName(index):
+	return f"chip_core.fb.sram{index}"
+
+def generateCoordinates(count):
+	print("The coordinates are just hardcoded!!!!!!!")
+	return "[590, 590]"
+
+def generateOrientation(count):
+	print("The orientation is just hardcoded!!!!!!!")
+	return "N"
+
+def generatePlacements(count, lines):
+	insertIndex = -1
+	progress = 0
+	keyword = ["MACROS", "RM_IHPSG13_2P_1024x16_c2_bm_bist", "instances"]
+	for(i, line) in enumerate(lines):
+		if keyword[progress] in line:
+			progress += 1
+		if progress == len(keyword):
+			insertIndex = i + 1
+			break
+	# Delete old placements
+	while(lines[insertIndex].startswith(" ")):
+		lines.pop(insertIndex)
+
+	print(count)
+	for i in range(count):
+		lines.insert(insertIndex + i * 3 + 0, f"      {sramName(i)}:\n")
+		lines.insert(insertIndex + i * 3 + 1, f"        location: {generateCoordinates(count)}\n")
+		lines.insert(insertIndex + i * 3 + 2, f"        orientation: {generateOrientation(count)}\n")
+	insertIndex += count * 3
+
+def generateConnections(count, lines):
+	insertIndex = -1
+	for(i, line) in enumerate(lines):
+		if "PDN_MACRO_CONNECTIONS" in line:
+			insertIndex = i + 1
+			break
+	# Delete old Power connections
+	while(lines[insertIndex].startswith("-")):
+		lines.pop(insertIndex)
+	
+	for i in range(count):
+		lines.insert(insertIndex + i * 2 + 0, f"- \"{sramName(i)} VDD VSS VDDARRAY! VSS!\"\n")
+		lines.insert(insertIndex + i * 2 + 1, f"- \"{sramName(i)} VDD VSS VDD! VSS!\"\n")
+	insertIndex += count * 2
+
+
+def generateConfigFile(count):
+	global scriptPath
+	global verilogCodeTemplate
+
+	configFile = scriptPath.parent.parent / "librelane" / "config.yaml"
+
+	file = open(configFile, "r+")
+	lines = file.readlines()
+	generatePlacements(count, lines)
+	generateConnections(count, lines)
+
+
+	file.seek(0)
+	file.writelines(lines)
+	file.close()
+
+########################################################################
+###### MAIN FUNCTION ###################################################
+########################################################################
+
+def parseArgs():
+	parser = argparse.ArgumentParser(
+		description="Generate the framebuffer and place it in src directory."
+	)
+	parser.add_argument("-c", "--count", type=int, required=True, help="Number of SRAM blocks to generate in the framebuffer.")
+
+	return parser.parse_args()
+
+def main():
+	args = parseArgs()
+
+	generateFrambufferFile(args.count)
+	generateConfigFile(args.count)
+	
 
 
 if __name__ == "__main__":

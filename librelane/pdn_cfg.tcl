@@ -193,7 +193,7 @@ add_pdn_connect \
     -grid macro \
     -layers "$::env(PDN_VERTICAL_LAYER) $::env(PDN_HORIZONTAL_LAYER)"
 
-# SRAM macros
+# SRAM macros - Do not touch this comment, because FBGenerator.py needs it
 
 define_pdn_grid \
     -macro \
