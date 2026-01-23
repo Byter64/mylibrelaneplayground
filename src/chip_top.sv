@@ -142,7 +142,7 @@ module chip_top #(
     (* keep *) chip_core #(
         .NUM_INPUT_PADS  (NUM_INPUT_PADS),
         .NUM_OUTPUT_PADS (NUM_OUTPUT_PADS)
-    ) i_chip_core (
+    ) chip_core (
         .clk        (clk_PAD2CORE),
         .rst_n      (rst_n_PAD2CORE),
         .input_in   (input_PAD2CORE),

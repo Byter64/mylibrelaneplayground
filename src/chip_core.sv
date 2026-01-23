@@ -23,7 +23,7 @@ module chip_core #(
     end
 */
     (* keep *)
-    Framebuffer framebuffer (
+    Framebuffer fb (
         .clkA        (clk),
         .dataInA    (input_in[0 +: 16]),
         .addressA   (input_in[16 +: 17]),

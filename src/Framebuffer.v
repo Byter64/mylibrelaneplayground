@@ -11,7 +11,7 @@ module Framebuffer (
     (* keep *)input[15:0] dataInB,
     (* keep *)input[16:0] addressB,
     (* keep *)input writeEnableB,
-    (* keep *)output reg[15:0] dataOutB
+    output reg[15:0] dataOutB
 );
  
 //reg[15:0] memory[16];
