@@ -54,6 +54,66 @@ def parseArgs():
 
 	return parser.parse_args()
 
+def generateOutMuxer(instanceNumber, lines):
+	insertIndex = -1
+	for(i, line) in enumerate(lines):
+		if ");" in line:
+			insertIndex = i + 2
+			break
+	signalTemplate = "logic[15:0] dataOutA0; logic[15:0] dataOutB0;\n"
+	muxTemplate = "\t\t\t\t(addressA[16:10] == 0) ? dataOutA0 :\n"
+
+	for i in range(instanceNumber):
+		lines.insert(insertIndex, signalTemplate.replace("A0", f"A{i}").replace("B0", f"B{i}"))
+		insertIndex += 1
+	
+	lines.insert(insertIndex, "\n")
+	insertIndex += 1
+
+	lines.insert(insertIndex, "assign dataOutA = \n")
+	insertIndex += 1
+
+	for i in range(instanceNumber):
+		lines.insert(insertIndex, muxTemplate.replace("A0", f"A{i}").replace("== 0", f"== {i}"))
+		insertIndex += 1
+
+	lines.insert(insertIndex, "\t\t\t\t16'h0000;\n\n")
+	insertIndex += 1
+
+	lines.insert(insertIndex, "assign dataOutB = \n")
+	insertIndex += 1
+
+	for i in range(instanceNumber):
+		lines.insert(insertIndex, muxTemplate.replace("A0", f"B{i}").replace("== 0", f"== {i}"))
+		insertIndex += 1
+
+	lines.insert(insertIndex, "\t\t\t\t16'h0000;\n\n")
+
+
+
+def generateSRAMInstance(instanceNumber, lines):
+	insertIndex = -1
+	for(i, line) in enumerate(lines):
+		if ");" in line:
+			insertIndex = i + 2
+			break
+
+	for i in range(instanceNumber):
+		instanceCode = codeTemplate.copy()
+		instanceCode[0] = instanceCode[0].replace("sram0", f"sram{i}")
+		instanceCode[3] = instanceCode[3].replace("== 0", f"== {i}")
+		instanceCode[4] = instanceCode[4].replace("== 0", f"== {i}")
+		instanceCode[8] = instanceCode[8].replace("dataOutA", f"dataOutA{i}")
+
+		instanceCode[13] = instanceCode[13].replace("== 0", f"== {i}")
+		instanceCode[14] = instanceCode[14].replace("== 0", f"== {i}")
+		instanceCode[18] = instanceCode[18].replace("dataOutB", f"dataOutB{i}")
+
+		for(j, line) in enumerate(instanceCode):
+			lines.insert(insertIndex, instanceCode[j] + "\n")
+			insertIndex += 1
+		lines.insert(insertIndex, "\n")
+		insertIndex += 1
 
 def main():
 	global scriptPath
@@ -72,25 +132,8 @@ def main():
 
 	file = open(generatedFramebufferPath, "r+")
 	lines = file.readlines()
-	insertIndex = -1
-	for(i, line) in enumerate(lines):
-		if ");" in line:
-			insertIndex = i + 2
-			break
-
-	for i in range(count):
-		instanceCode = codeTemplate.copy()
-		instanceCode[0] = instanceCode[0].replace("sram0", f"sram{i}")
-		instanceCode[3] = instanceCode[3].replace("== 0", f"== {i}")
-		instanceCode[4] = instanceCode[4].replace("== 0", f"== {i}")
-		instanceCode[13] = instanceCode[3].replace("== 0", f"== {i}")
-		instanceCode[14] = instanceCode[14].replace("== 0", f"== {i}")
-
-		for(j, line) in enumerate(instanceCode):
-			lines.insert(insertIndex, instanceCode[j] + "\n")
-			insertIndex += 1
-		lines.insert(insertIndex, "\n")
-		insertIndex += 1
+	generateSRAMInstance(count, lines)
+	generateOutMuxer(count, lines)
 
 	file.seek(0)
 	file.writelines(lines)
