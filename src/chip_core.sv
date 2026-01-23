@@ -8,12 +8,12 @@ module chip_core #(
     parameter NUM_OUTPUT_PADS
     )(
     input  logic clk,       // clock
-    input  logic rst_n,     // reset (active low)
+    (* keep *)input  logic rst_n,     // reset (active low)
     
     input  wire [NUM_INPUT_PADS-1 :0] input_in,   // Input value
     output wire [NUM_OUTPUT_PADS-1:0] output_out // Output value
 );
-
+    /*
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             output_out <= '0;
@@ -21,6 +21,23 @@ module chip_core #(
             output_out <= {NUM_OUTPUT_PADS{^input_in}};
         end
     end
+*/
+    (* keep *)
+    Framebuffer framebuffer (
+        .clkA        (clk),
+        .dataInA    (input_in[0 +: 16]),
+        .addressA   (input_in[16 +: 17]),
+        .writeEnableA (input_in[33 +: 1]),
+        
+        .clkB        (clk),
+        .dataInB    (input_in[34 +: 16]),
+        .addressB   (input_in[50 +: 17]),
+        .writeEnableB (input_in[67 +: 1]),
+
+        .dataOutA   (output_out[0 +: 16]),
+        .dataOutB   (output_out[16 +: 16])
+    );
+
     /*
     logic [NUM_OUTPUT_PADS-1:0] count;
     always_ff @(posedge clk) begin
