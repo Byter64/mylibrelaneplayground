@@ -1,4 +1,5 @@
 import argparse
+from math import sqrt
 from pathlib import Path
 import shutil
 
@@ -137,13 +138,59 @@ def generateFrambufferFile(count):
 def sramName(index):
 	return f"chip_core.fb.sram{index}"
 
-def generateCoordinates(count):
-	print("The coordinates are just hardcoded!!!!!!!")
-	return "[590, 590]"
+sramCountX = -1
+chipOriginX = -1
+chipOriginY = -1
+chipWidth = -1
+chipHeight = -1
+sramStartX = 450
+sramStartY = 450
+sramStrideX = 450
+sramStrideY = 420
 
-def generateOrientation(count):
-	print("The orientation is just hardcoded!!!!!!!")
-	return "N"
+def setChipData(config : list):
+	global chipOriginX
+	global chipOriginY
+	global chipWidth
+	global chipHeight
+	for(i, line) in enumerate(config):
+		if "CORE_AREA" in line:
+			start = line.find('[')
+			end = line.find(']')
+			chipOriginX, chipOriginY, chipEndX, chipEndY = line[start+1:end].split(',')
+			chipOriginX = int(chipOriginX)
+			chipOriginY = int(chipOriginY)
+			chipEndX = int(chipEndX)
+			chipEndY = int(chipEndY)
+			chipWidth = chipEndX - chipOriginX
+			chipHeight = chipEndY - chipOriginY
+			break
+			
+
+def calculateSramCountX(count):
+	global sramCountX
+	root = sqrt(count)
+	sramCountX = int(root)
+	if sramCountX * sramStrideX >= chipWidth:
+		sramCountX = chipWidth // sramStrideX
+	
+
+def generateCoordinates(index, count):
+	indexX = index % sramCountX
+	indexY = index // sramCountX
+	x = sramStartX + indexX * sramStrideX
+	y = sramStartY + indexY * sramStrideX
+	if y >= chipOriginY + chipHeight:
+		print("WARNING: SRAM placement exceeds chip height!")
+
+	return f"[{x}, {y}]"
+
+def generateOrientation(index, count):
+	indexY = index // sramCountX
+	if indexY % 2 == 0:
+		return "S"
+	else:
+		return "N"
 
 def generatePlacements(count, lines):
 	insertIndex = -1
@@ -159,11 +206,11 @@ def generatePlacements(count, lines):
 	while(lines[insertIndex].startswith(" ")):
 		lines.pop(insertIndex)
 
-	print(count)
+	calculateSramCountX(count)
 	for i in range(count):
 		lines.insert(insertIndex + i * 3 + 0, f"      {sramName(i)}:\n")
-		lines.insert(insertIndex + i * 3 + 1, f"        location: {generateCoordinates(count)}\n")
-		lines.insert(insertIndex + i * 3 + 2, f"        orientation: {generateOrientation(count)}\n")
+		lines.insert(insertIndex + i * 3 + 1, f"        location: {generateCoordinates(i, count)}\n")
+		lines.insert(insertIndex + i * 3 + 2, f"        orientation: {generateOrientation(i, count)}\n")
 	insertIndex += count * 3
 
 def generateConnections(count, lines):
@@ -190,6 +237,8 @@ def generateConfigFile(count):
 
 	file = open(configFile, "r+")
 	lines = file.readlines()
+	setChipData(lines)
+	calculateSramCountX(count)
 	generatePlacements(count, lines)
 	generateConnections(count, lines)
 
