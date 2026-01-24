@@ -5,13 +5,13 @@ module Framebuffer (
     input[15:0] dataInA,
     input[16:0] addressA,
     input writeEnableA,
-    output reg[15:0] dataOutA,
+    output [15:0] dataOutA,
 
     input clkB,
     input[15:0] dataInB,
     input[16:0] addressB,
     input writeEnableB,
-    output reg[15:0] dataOutB
+    output [15:0] dataOutB
 );
   
 //reg[15:0] memory[16];

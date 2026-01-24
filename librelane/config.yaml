@@ -184,7 +184,7 @@ FP_SIZING: absolute
 # 3880umx5070um including 26um
 # for the sealring on all sides
 DIE_AREA: [0, 0, 3000, 3000]
-CORE_AREA: [365, 365, 2635, 2635] #Original margin was 365 on all sides
+CORE_AREA: [365, 365, 2635, 2635]
 
 # Increase for more logic
 # on your die
@@ -241,14 +241,14 @@ MACROS:
         - pdk_dir::libs.ref/sg13g2_sram/lib/RM_IHPSG13_2P_1024x16_c2_bm_bist_slow_1p08V_125C.lib
     instances:
       chip_core.fb.sram0:
-        location: [1090, 590]
-        orientation: N
+        location: [450, 450]
+        orientation: S
       chip_core.fb.sram1:
-        location: [1590, 590]
-        orientation: N
+        location: [900, 450]
+        orientation: S
       chip_core.fb.sram2:
-        location: [2090, 590]
-        orientation: N
+        location: [1350, 450]
+        orientation: S
 
 # This is an alternative method compared to
 # specifying the power connections in the RTL
