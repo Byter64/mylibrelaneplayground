@@ -1,5 +1,5 @@
 //This framebuffer is hardwired to contain 96k * 16-Bit words
-
+//I would need 94 x 2kB SRAMs to realise this
 module Framebuffer (
     input clkA,
     input[15:0] dataInA,

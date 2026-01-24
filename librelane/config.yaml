@@ -244,31 +244,31 @@ MACROS:
         location: [450, 450]
         orientation: S
       chip_core.fb.sram1:
-        location: [900, 450]
+        location: [920, 450]
         orientation: S
       chip_core.fb.sram2:
-        location: [1350, 450]
+        location: [1390, 450]
         orientation: S
       chip_core.fb.sram3:
-        location: [450, 900]
+        location: [450, 920]
         orientation: N
       chip_core.fb.sram4:
-        location: [900, 900]
+        location: [920, 920]
         orientation: N
       chip_core.fb.sram5:
-        location: [1350, 900]
+        location: [1390, 920]
         orientation: N
       chip_core.fb.sram6:
-        location: [450, 1350]
+        location: [450, 1390]
         orientation: S
       chip_core.fb.sram7:
-        location: [900, 1350]
+        location: [920, 1390]
         orientation: S
       chip_core.fb.sram8:
-        location: [1350, 1350]
+        location: [1390, 1390]
         orientation: S
       chip_core.fb.sram9:
-        location: [450, 1800]
+        location: [450, 1860]
         orientation: N
 
 # This is an alternative method compared to

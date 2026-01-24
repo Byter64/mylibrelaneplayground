@@ -3,6 +3,11 @@ from math import sqrt
 from pathlib import Path
 import shutil
 
+sramStartX = 450
+sramStartY = 450
+sramStrideX = 470
+sramStrideY = 430
+
 scriptPath = Path(__file__).resolve()
 
 verilogCodeTemplate = """RM_IHPSG13_2P_1024x16_c2_bm_bist sram0 (
@@ -135,18 +140,14 @@ def generateFrambufferFile(count):
 ########################################################################
 ###### config.yaml Generation ##########################################
 ########################################################################
-def sramName(index):
-	return f"chip_core.fb.sram{index}"
-
 sramCountX = -1
 chipOriginX = -1
 chipOriginY = -1
 chipWidth = -1
 chipHeight = -1
-sramStartX = 450
-sramStartY = 450
-sramStrideX = 450
-sramStrideY = 420
+
+def sramName(index):
+	return f"chip_core.fb.sram{index}"
 
 def setChipData(config : list):
 	global chipOriginX
