@@ -243,17 +243,16 @@ MACROS:
       chip_core.fb.sram0:
         location: [450, 450]
         orientation: S
-      chip_core.fb.sram1:
-        location: [920, 450]
-        orientation: S
-      chip_core.fb.sram2:
-        location: [1390, 450]
-        orientation: S
-      chip_core.fb.sram3:
-        location: [450, 920]
-        orientation: N
-      chip_core.fb.sram4:
-        location: [920, 920]
+
+# This is an alternative method compared to
+# specifying the power connections in the RTL
+PDN_MACRO_CONNECTIONS:
+- "chip_core.fb.sram0 VDD VSS VDDARRAY! VSS!"
+- "chip_core.fb.sram0 VDD VSS VDD! VSS!"
+
+# Custom PDN config to connect to SRAMs
+PDN_CFG: dir::pdn_cfg.tcl
+ location: [920, 920]
         orientation: N
       chip_core.fb.sram5:
         location: [1390, 920]
