@@ -2,6 +2,7 @@
 module Top
 (
     input logic  clk_25mhz,
+	input logic  rst_n,
     output logic [3:0] gpdi_dp,
  
 	output logic        sdram_clk,
@@ -27,26 +28,32 @@ module Top
 	output logic		c2latch,
 	input  logic		c2data,
 
-	//Buttons for debug
+	//Buttons for options
 	input logic[6:0]	btn,
 
 	//Audio
 	output logic audio_bclk,
 	output logic audio_lrclk,
 	output logic audio_dout
-);         
+);
+
+/* PIN COUNTS
+* IN: 		11 = 1 + 1 + 1 + 1 + 7 = 11
+* OUT: 		36 = 4 + 6 + 13 + 2 + 2 + 2 + 2 + 2 + 3 = 36
+* INOUT: 	20 = 16 + 4 = 20
+* STROM:	4  = 1 + 1 + 1 + 1 = 4
+* -------------------------------
+* TOTAL:	71 = 1 clk, 1 rst, 9 in, 36 out, 20 inout, 4 Strom
+*/
        
-logic canBeDeleted;
-//logic canBeDeleted2n;
-         
-logic hdmi_pixClk;   
-logic resetn = 0;    
-logic trap;        
+logic hdmi_pixClk;
+logic resetn = 0;
+logic trap;
 logic [7:0] reset_counter = 0;
 always_ff @(posedge hdmi_pixClk) begin
     if(reset_counter != 255)
         reset_counter <= reset_counter + 1;
- 
+
 	resetn <= reset_counter == 255;
 end
   

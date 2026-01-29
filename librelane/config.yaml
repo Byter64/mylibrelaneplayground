@@ -1,3 +1,8 @@
+# TODO:
+# - Rücksetzlogik über Resetpin fehlt noch in Top.sv
+# - (* keep *) von allen pins entfernen
+# - SRAM final einbauen
+
 meta:
   version: 3
   flow: Chip
@@ -44,122 +49,87 @@ PRIMARY_GDSII_STREAMOUT_TOOL: klayout
 
 # Specify the pad instances for the padring
 PAD_SOUTH: [
-    clk_pad,
-    rst_n_pad,
-    "outputs\\[23\\].output_pad",
-    "outputs\\[22\\].output_pad",
-    "outputs\\[21\\].output_pad",
-    "outputs\\[20\\].output_pad",
-    "outputs\\[19\\].output_pad",
-    "outputs\\[18\\].output_pad",
-    "outputs\\[17\\].output_pad",
-    "outputs\\[16\\].output_pad",
-    "outputs\\[15\\].output_pad",
-    "outputs\\[14\\].output_pad",
-    "outputs\\[13\\].output_pad",
-    "outputs\\[12\\].output_pad",
-    "outputs\\[11\\].output_pad",
-    "outputs\\[10\\].output_pad",
-    "outputs\\[9\\].output_pad",
-    "outputs\\[8\\].output_pad",
-    "outputs\\[7\\].output_pad",
-    "outputs\\[6\\].output_pad",
-    "outputs\\[5\\].output_pad",
-    "outputs\\[4\\].output_pad",
-    "outputs\\[3\\].output_pad",
-    "outputs\\[2\\].output_pad",
-    "outputs\\[1\\].output_pad",
-    "outputs\\[0\\].output_pad",
-    "inputs\\[67\\].input_pad"
+    "iovdd_pads\\[0\\].iovdd_pad",
+    "iovss_pads\\[0\\].iovss_pad",
+    "inputs\\[0\\].input_pad", #buttons[0]
+    "inputs\\[1\\].input_pad", #buttons[1]
+    "inputs\\[2\\].input_pad", #buttons[2]
+    "inputs\\[3\\].input_pad", #buttons[3]
+    "inputs\\[4\\].input_pad", #buttons[4]
+    "inputs\\[5\\].input_pad", #buttons[5]
+    "inputs\\[6\\].input_pad", #buttons[6]
+    "outputs\\[0\\].output_pad", #c1clock
+    "outputs\\[1\\].output_pad", #c1latch
+    "inputs\\[7\\].input_pad",    #c1data
+    "outputs\\[2\\].output_pad", #c2clock
+    "outputs\\[3\\].output_pad", #c2latch
+    "inputs\\[8\\].input_pad",    #c2data
+    "outputs\\[4\\].output_pad", #audio_bclk
+    "outputs\\[5\\].output_pad", #audio_lrclk
+    "outputs\\[6\\].output_pad", #audio_dout
 ]
 
 PAD_EAST: [
-    "vdd_pads\\[0\\].vdd_pad",
-    "vss_pads\\[0\\].vss_pad",
-    "inputs\\[38\\].input_pad",
-    "inputs\\[37\\].input_pad",
-    "inputs\\[36\\].input_pad",
-    "inputs\\[35\\].input_pad",
-    "inputs\\[34\\].input_pad",
-    "inputs\\[33\\].input_pad",
-    "inputs\\[32\\].input_pad",
-    "inputs\\[31\\].input_pad",
-    "inputs\\[30\\].input_pad",
-    "inputs\\[29\\].input_pad",
-    "inputs\\[28\\].input_pad",
-    "inputs\\[27\\].input_pad",
-    "inputs\\[26\\].input_pad",
-    "inputs\\[25\\].input_pad",
-    "inputs\\[24\\].input_pad",
-    "inputs\\[23\\].input_pad",
-    "inputs\\[22\\].input_pad",
-    "inputs\\[21\\].input_pad",
-    "inputs\\[20\\].input_pad",
-    "inputs\\[19\\].input_pad",
-    "inputs\\[18\\].input_pad",
-    "inputs\\[17\\].input_pad",
-    "inputs\\[16\\].input_pad",
-    "inputs\\[15\\].input_pad"
+    "outputs\\[7\\].output_pad", #sdram_ba[0]
+    "outputs\\[8\\].output_pad", #sdram_ba[1]
+    "outputs\\[9\\].output_pad", #sdram_addr[0]
+    "outputs\\[10\\].output_pad", #sdram_addr[1]
+    "outputs\\[11\\].output_pad", #sdram_addr[2]
+    "outputs\\[12\\].output_pad", #sdram_addr[3]
+    "outputs\\[13\\].output_pad", #sdram_addr[4]
+    "outputs\\[14\\].output_pad", #sdram_addr[5]
+    "outputs\\[15\\].output_pad", #sdram_addr[6]
+    "outputs\\[16\\].output_pad", #sdram_addr[7]
+    "outputs\\[17\\].output_pad", #sdram_addr[8]
+    "outputs\\[18\\].output_pad", #sdram_addr[9]
+    "outputs\\[19\\].output_pad", #sdram_addr[10]
+    "outputs\\[20\\].output_pad", #sdram_addr[11]
+    "outputs\\[21\\].output_pad", #sdram_addr[12]
+    rst_n_pad,
+    clk_pad,
 ]
 
 PAD_NORTH: [
-    "outputs\\[31\\].output_pad",
-    "outputs\\[30\\].output_pad",
-    "outputs\\[29\\].output_pad",
-    "outputs\\[28\\].output_pad",
-    "outputs\\[27\\].output_pad",
-    "outputs\\[26\\].output_pad",
-    "outputs\\[25\\].output_pad",
-    "outputs\\[24\\].output_pad",
-    "inputs\\[14\\].input_pad",
-    "inputs\\[13\\].input_pad",
-    "inputs\\[12\\].input_pad",
-    "inputs\\[11\\].input_pad",
-    "inputs\\[10\\].input_pad",
-    "inputs\\[9\\].input_pad",
-    "inputs\\[8\\].input_pad",
-    "inputs\\[7\\].input_pad",
-    "inputs\\[6\\].input_pad",
-    "inputs\\[5\\].input_pad",
-    "inputs\\[4\\].input_pad",
-    "inputs\\[3\\].input_pad",
-    "inputs\\[2\\].input_pad",
-    "inputs\\[1\\].input_pad",
-    "inputs\\[0\\].input_pad",
-    "inputs\\[66\\].input_pad",
-    "iovdd_pads\\[0\\].iovdd_pad",
-    "iovss_pads\\[0\\].iovss_pad"
+    "bidirs\\[0\\].bidir_pad", #sdram_data[0]
+    "bidirs\\[1\\].bidir_pad", #sdram_data[1]
+    "bidirs\\[2\\].bidir_pad", #sdram_data[2]
+    "bidirs\\[3\\].bidir_pad", #sdram_data[3]
+    "bidirs\\[4\\].bidir_pad", #sdram_data[4]
+    "bidirs\\[5\\].bidir_pad", #sdram_data[5]
+    "bidirs\\[6\\].bidir_pad", #sdram_data[6]
+    "bidirs\\[7\\].bidir_pad", #sdram_data[7]
+    "bidirs\\[8\\].bidir_pad", #sdram_data[8]
+    "bidirs\\[9\\].bidir_pad", #sdram_data[9]
+    "bidirs\\[10\\].bidir_pad", #sdram_data[10]
+    "bidirs\\[11\\].bidir_pad", #sdram_data[11]
+    "bidirs\\[12\\].bidir_pad", #sdram_data[12]
+    "bidirs\\[13\\].bidir_pad", #sdram_data[13]
+    "bidirs\\[14\\].bidir_pad", #sdram_data[14]
+    "bidirs\\[15\\].bidir_pad", #sdram_data[15]
+    "outputs\\[22\\].output_pad", #sdram_dqm[0]
+    "outputs\\[23\\].output_pad", #sdram_dqm[1]
 ]
 
 PAD_WEST: [
-    "inputs\\[65\\].input_pad",
-    "inputs\\[64\\].input_pad",
-    "inputs\\[63\\].input_pad",
-    "inputs\\[62\\].input_pad",
-    "inputs\\[61\\].input_pad",
-    "inputs\\[60\\].input_pad",
-    "inputs\\[59\\].input_pad",
-    "inputs\\[58\\].input_pad",
-    "inputs\\[57\\].input_pad",
-    "inputs\\[56\\].input_pad",
-    "inputs\\[55\\].input_pad",
-    "inputs\\[54\\].input_pad",
-    "inputs\\[53\\].input_pad",
-    "inputs\\[52\\].input_pad",
-    "inputs\\[51\\].input_pad",
-    "inputs\\[50\\].input_pad",
-    "inputs\\[49\\].input_pad",
-    "inputs\\[48\\].input_pad",
-    "inputs\\[47\\].input_pad",
-    "inputs\\[46\\].input_pad",
-    "inputs\\[45\\].input_pad",
-    "inputs\\[44\\].input_pad",
-    "inputs\\[43\\].input_pad",
-    "inputs\\[42\\].input_pad",
-    "inputs\\[41\\].input_pad",
-    "inputs\\[40\\].input_pad",
-    "inputs\\[39\\].input_pad"
-]
+    "outputs\\[24\\].output_pad", #sd_clk
+    "outputs\\[25\\].output_pad", #sd_cmd
+    "bidirs\\[16\\].bidir_pad",   #sd_d0
+    "bidirs\\[17\\].bidir_pad",   #sd_d1
+    "bidirs\\[18\\].bidir_pad",   #sd_d2
+    "bidirs\\[19\\].bidir_pad",   #sd_d3
+    "outputs\\[26\\].output_pad", #sdram_clk
+    "outputs\\[27\\].output_pad", #sdram_cke
+    "outputs\\[28\\].output_pad", #sdram_csn
+    "outputs\\[29\\].output_pad", #sdram_wen
+    "outputs\\[30\\].output_pad", #sdram_rasn
+    "outputs\\[31\\].output_pad", #sdram_casn
+    "outputs\\[32\\].output_pad", #gpdi_dp[0]
+    "outputs\\[33\\].output_pad", #gpdi_dp[1]
+    "outputs\\[34\\].output_pad", #gpdi_dp[2]
+    "outputs\\[35\\].output_pad", #gpdi_dp[3]
+    "vdd_pads\\[0\\].vdd_pad",
+    "vss_pads\\[0\\].vss_pad",
+] 
 
 # SDC files
 PNR_SDC_FILE: dir::chip_top.sdc
@@ -182,8 +152,8 @@ CLOCK_PERIOD: 20
 FP_SIZING: absolute
 # 3880umx5070um including 26um
 # for the sealring on all sides
-DIE_AREA: [0, 0, 3000, 3000]
-CORE_AREA: [365, 365, 2635, 2635]
+DIE_AREA: [0, 0, 2500, 2500]
+CORE_AREA: [365, 365, 2135, 2135]
 
 # Increase for more logic
 # on your die

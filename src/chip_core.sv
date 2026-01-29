@@ -5,22 +5,35 @@
 
 module chip_core #(
     parameter NUM_INPUT_PADS,
-    parameter NUM_OUTPUT_PADS
+    parameter NUM_OUTPUT_PADS,
+    parameter NUM_BIDIR_PADS
     )(
     input  logic clk,       // clock
     input  logic rst_n,     // reset (active low)
     
     input  wire [NUM_INPUT_PADS -1:0] input_in,   // Input value
-    output wire [NUM_OUTPUT_PADS-1:0] output_out // Output value
+    output wire [NUM_OUTPUT_PADS-1:0] output_out, // Output value`
+    input  wire [NUM_BIDIR_PADS-1 :0] bidir_in,   // Input value
+    output wire [NUM_BIDIR_PADS-1 :0] bidir_out,  // Output value
+    output wire [NUM_BIDIR_PADS-1 :0] bidir_oe    // Output enable
 );
+
+    // Set all bidir as output
+    assign bidir_oe = '1;
+    //Is this necessary?????
+    logic _unused;
+    assign _unused = &bidir_in;
+    
     
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             output_out <= '0;
         end else begin
             output_out <= {NUM_OUTPUT_PADS{^input_in}};
+            bidir_out <= {NUM_BIDIR_PADS{^input_in}};
         end
     end
+
 endmodule
 
 `default_nettype wire

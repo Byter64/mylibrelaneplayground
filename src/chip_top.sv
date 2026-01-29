@@ -13,8 +13,9 @@ module chip_top #(
     parameter NUM_IOVSS_PADS = 1,
     
     // Signal pads
-    parameter NUM_INPUT_PADS  = 68,
-    parameter NUM_OUTPUT_PADS = 32
+    parameter NUM_INPUT_PADS  = 9,
+    parameter NUM_OUTPUT_PADS = 36,
+    parameter NUM_BIDIR_PADS  = 20
     )(
     `ifdef USE_POWER_PINS
     inout wire IOVDD,
@@ -25,13 +26,17 @@ module chip_top #(
     inout  wire clk_PAD,
     inout  wire rst_n_PAD,
     inout  wire [NUM_INPUT_PADS-1 :0] input_PAD,
-    inout  wire [NUM_OUTPUT_PADS-1:0] output_PAD
+    inout  wire [NUM_OUTPUT_PADS-1:0] output_PAD,
+    inout  wire [NUM_BIDIR_PADS-1 :0] bidir_PAD
 );
 
     wire clk_PAD2CORE;
     wire rst_n_PAD2CORE;
     wire [NUM_INPUT_PADS-1 :0] input_PAD2CORE;
     wire [NUM_OUTPUT_PADS-1:0] output_CORE2PAD;
+    wire [NUM_BIDIR_PADS-1 :0] bidir_PAD2CORE;
+    wire [NUM_BIDIR_PADS-1 :0] bidir_CORE2PAD;
+    wire [NUM_BIDIR_PADS-1 :0] bidir_CORE2PAD_OE;
 
     // Power/ground pad instances
     generate
@@ -137,16 +142,37 @@ module chip_top #(
     end
     endgenerate
 
+    generate
+    for (genvar i=0; i<NUM_BIDIR_PADS; i++) begin : bidirs
+        sg13g2_IOPadInOut30mA bidir_pad (
+            `ifdef USE_POWER_PINS
+            .iovdd  (IOVDD),
+            .iovss  (IOVSS),
+            .vdd    (VDD),
+            .vss    (VSS),
+            `endif
+            .c2p    (bidir_CORE2PAD[i]),
+            .c2p_en (bidir_CORE2PAD_OE[i]),
+            .p2c    (bidir_PAD2CORE[i]),
+            .pad    (bidir_PAD[i])
+        );
+    end
+    endgenerate
+
     // Core design
 
     (* keep *) chip_core #(
         .NUM_INPUT_PADS  (NUM_INPUT_PADS),
-        .NUM_OUTPUT_PADS (NUM_OUTPUT_PADS)
+        .NUM_OUTPUT_PADS (NUM_OUTPUT_PADS),
+        .NUM_BIDIR_PADS  (NUM_BIDIR_PADS)
     ) chip_core (
         .clk        (clk_PAD2CORE),
         .rst_n      (rst_n_PAD2CORE),
         .input_in   (input_PAD2CORE),
-        .output_out (output_CORE2PAD)
+        .output_out (output_CORE2PAD),
+        .bidir_in   (bidir_PAD2CORE),
+        .bidir_out  (bidir_CORE2PAD),
+        .bidir_oe   (bidir_CORE2PAD_OE)
     );
 
 endmodule
