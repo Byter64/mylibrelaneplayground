@@ -1,40 +1,40 @@
 //`define NO_CONTROLLER_ATTACHED
 module Top
 (
-    input logic  clk_25mhz,
-	input logic  rst_n,
-    output logic [3:0] gpdi_dp,
+    (* keep *)input logic  clk_25mhz,
+	(* keep *)input logic  rst_n,
+    (* keep *)output logic [3:0] gpdi_dp = -1,
  
-	output logic        sdram_clk,
-	output logic        sdram_cke,
-	output logic        sdram_csn,
-	output logic        sdram_wen,
-	output logic        sdram_rasn,
-	output logic        sdram_casn,
-	output logic[12:0]  sdram_a,
-	output logic[1:0]   sdram_ba,
-	output logic[1:0]   sdram_dqm,
-	inout  logic[15:0]  sdram_d, 
+	(* keep *)output logic        sdram_clk = -1,
+	(* keep *)output logic        sdram_cke = -1,
+	(* keep *)output logic        sdram_csn = -1,
+	(* keep *)output logic        sdram_wen = -1,
+	(* keep *)output logic        sdram_rasn = -1,
+	(* keep *)output logic        sdram_casn = -1,
+	(* keep *)output logic[12:0]  sdram_a = -1,
+	(* keep *)output logic[1:0]   sdram_ba = -1,
+	(* keep *)output logic[1:0]   sdram_dqm = -1,
+	(* keep *)inout  logic[15:0]  sdram_d, 
 
-    output logic        sd_clk,
-    output logic        sd_cmd,
-    inout  logic [3:0]  sd_d,
+    (* keep *)output logic        sd_clk = -1,
+    (* keep *)output logic        sd_cmd = -1,
+    (* keep *)inout  logic [3:0]  sd_d,
 
-	//Controller
-	output logic		c1clock,
-	output logic		c1latch,
-	input  logic		c1data,
-	output logic		c2clock,
-	output logic		c2latch,
-	input  logic		c2data,
+	(* keep *)//Controller
+	(* keep *)output logic		c1clock = -1,
+	(* keep *)output logic		c1latch = -1,
+	(* keep *)input  logic		c1data,
+	(* keep *)output logic		c2clock = -1,
+	(* keep *)output logic		c2latch = -1,
+	(* keep *)input  logic		c2data,
 
-	//Buttons for options
-	input logic[6:0]	btn,
+	(* keep *)//Buttons for options
+	(* keep *)input logic[6:0]	btn,
 
-	//Audio
-	output logic audio_bclk,
-	output logic audio_lrclk,
-	output logic audio_dout
+	(* keep *)//Audio
+	(* keep *)output logic audio_bclk = -1,
+	(* keep *)output logic audio_lrclk = -1,
+	(* keep *)output logic audio_dout = -1
 );
 
 /* PIN COUNTS
@@ -45,7 +45,7 @@ module Top
 * -------------------------------
 * TOTAL:	71 = 1 clk, 1 rst, 9 in, 36 out, 20 inout, 4 Strom
 */
-       
+/*
 logic hdmi_pixClk;
 logic resetn = 0;
 logic trap;
@@ -749,4 +749,5 @@ AxiCrossbar
 	.m_axil_rvalid(AXI_m_axil_rvalid),
 	.m_axil_rready(AXI_m_axil_rready)
 );
+*/
 endmodule
