@@ -148,7 +148,7 @@ GND_NETS:
 CLOCK_PORT: clk_PAD
 CLOCK_NET: clk_pad/p2c
 
-CLOCK_PERIOD: 40 # <=> 25MHz
+CLOCK_PERIOD: 20 # <=> 50MHz
 
 # Floorplanning
 FP_SIZING: absolute
